@@ -19,7 +19,7 @@ defmodule BitfinexApi.Mixfile do
   def application do
     [
       extra_applications: [:httpoison, :websockex, :poison],
-      env: [api_endpoint: "https://api.bitfinex.com/v1/", ws_endpoint: "wss://api.bitfinex.com/ws"]
+      env: [api_endpoint: "https://api.bitfinex.com", ws_endpoint: "wss://api.bitfinex.com/ws"]
     ]
   end
 
