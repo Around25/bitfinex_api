@@ -17,6 +17,16 @@ defmodule BitfinexApi do
     invoke_public_api("/v1/book/#{params.pair}?" <> URI.encode_query(params))
   end
 
+  def symbols do
+    [ "btcusd","ltcusd","ltcbtc","ethusd","ethbtc","etcbtc","etcusd","rrtusd","rrtbtc",
+      "zecusd","zecbtc","xmrusd","xmrbtc","dshusd","dshbtc","bccbtc","bcubtc","bccusd",
+      "bcuusd","btceur","xrpusd","xrpbtc","iotusd","iotbtc","ioteth","eosusd","eosbtc",
+      "eoseth","sanusd","sanbtc","saneth","omgusd","omgbtc","omgeth","bchusd","bchbtc",
+      "bcheth","neousd","neobtc","neoeth","etpusd","etpbtc","etpeth","qtmusd","qtmbtc",
+      "qtmeth","bt1usd","bt2usd","bt1btc","bt2btc","avtusd","avtbtc","avteth","edousd",
+      "edobtc","edoeth","btgusd","btgbtc","datusd","datbtc","dateth","qshusd","qshbtc",
+      "qsheth","yywusd","yywbtc","yyweth"] |> Enum.map(&String.upcase/1)
+  end
 
   @doc """
   Get info about the account
