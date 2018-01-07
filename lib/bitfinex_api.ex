@@ -17,6 +17,33 @@ defmodule BitfinexApi do
     invoke_public_api("/v1/book/#{params.pair}?" <> URI.encode_query(params))
   end
 
+  def fee("trade", "maker"), do: 0.100
+  def fee("trade", "taker"), do: 0.200
+  def fee("deposit", _coin), do: 0
+  def fee("withdraw", "BTC"), do: 0.0005
+  def fee("withdraw", "ETH"), do: 0.01
+  def fee("withdraw", "BCH"), do: 0.0005
+  def fee("withdraw", "IOTA"), do: 0
+  def fee("withdraw", "LTC"), do: 0.001
+  def fee("withdraw", "ETC"), do: 0.01
+  def fee("withdraw", "EOS"), do: 0.1
+  def fee("withdraw", "DSH"), do: 0.01
+  def fee("withdraw", "BTG"), do: 0
+  def fee("withdraw", "XMR"), do: 0.04
+  def fee("withdraw", "NEO"), do: 0
+  def fee("withdraw", "ZEC"), do: 0.001
+  def fee("withdraw", "XRP"), do: 0.02
+  def fee("withdraw", "OMG"), do: 0.1
+  def fee("withdraw", "SAN"), do: 0.1
+  def fee("withdraw", "ETP"), do: 0.01
+  def fee("withdraw", "DAT"), do: 1
+  def fee("withdraw", "QTM"), do: 0.01
+  def fee("withdraw", "EDO"), do: 0.5
+  def fee("withdraw", "QASH"), do: 0
+  def fee("withdraw", "AVT"), do: 0.5
+  def fee("withdraw", "YYW"), do: 0
+  def fee("withdraw", "USDT"), do: 5.0
+
   def symbols do
     [ "btcusd","ltcusd","ltcbtc","ethusd","ethbtc","etcbtc","etcusd","rrtusd","rrtbtc",
       "zecusd","zecbtc","xmrusd","xmrbtc","dshusd","dshbtc","bccbtc","bcubtc","bccusd",
