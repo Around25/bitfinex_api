@@ -27,16 +27,20 @@ defmodule BitfinexApi.WebSocket do
 
   # handle any other valid message from the web socket
   def handle_frame({type, msg}, state) do
+    IO.inspect type
+    IO.inspect msg
     msg = Poison.decode!(msg)
     process_message(msg, state)
   end
 
   defp process_message(%{"chanId" => chanId, "channel" => "ticker", "event" => "subscribed", "pair" => pair} = msg, state) do
+    IO.inspect msg
     state = Map.merge(state, Map.new([{chanId, pair}]))
     {:ok, state}
   end
   defp process_message([_ | ["hb"]], state), do: {:ok, state}
-  defp process_message([chanId, bid, bid_size, ask, ask_size, daily_change, daily_change_perc, last_price, volume, high, low], state) do
+  defp process_message([chanId, bid, bid_size, ask, ask_size, daily_change, daily_change_perc, last_price, volume, high, low] = msg, state) do
+    IO.inspect msg
     ask = ask |> Decimal.new() |> Decimal.to_string(:normal)
     bid = bid |> Decimal.new() |> Decimal.to_string(:normal)
     last_price = last_price |> Decimal.new() |> Decimal.to_string(:normal)
@@ -59,7 +63,8 @@ defmodule BitfinexApi.WebSocket do
               open: nil}
             }]
             |> Map.new()
-    task = Task.async(BitfinexApi.WebSocket.Producer, :sync_notify, [event])
+    IO.inspect event
+#    task = Task.async(BitfinexApi.WebSocket.Producer, :sync_notify, [event])
     {:ok, state}
   end
   defp process_message(%{"event"=> "info"}, state) do {:ok, state} end

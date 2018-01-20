@@ -12,12 +12,13 @@ defmodule BitfinexApi.WebSocket.Producer do
   end
 
   def handle_info(:work, state) do
+    IO.inspect "=============SUBSCRIBE TO BITFINEX!!!============="
     BitfinexApi.WebSocket.subscribe(BitfinexApi.WebSocket, "ticker")
     {:noreply, [], state}
   end
 
   defp schedule_work() do
-    Process.send_after(self(), :work, 10 * 1000) # In 10 seconds
+    Process.send_after(self(), :work, 3 * 1000) # In 10 seconds
   end
 
   def sync_notify(event, timeout \\ 5000) do
