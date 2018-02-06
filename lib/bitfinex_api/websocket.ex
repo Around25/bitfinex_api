@@ -51,8 +51,10 @@ defmodule BitfinexApi.WebSocket do
 
     event = %{
       pair: Map.get(state, chanId),
-      ask: ask,
-      bid: bid,
+      ask_price: ask,
+      bid_price: bid,
+      ask_volume: ask_size,
+      bid_volume: bid_size,
       last: last_price,
       vol_today: %{today: volume, last_24: volume},
       price: %{today: last_price, last_24: last_price},

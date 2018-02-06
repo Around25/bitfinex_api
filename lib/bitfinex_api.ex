@@ -101,17 +101,17 @@ defmodule BitfinexApi do
     invoke_private_api("/v1/history/movements", Map.merge(%{currency: currency, limit: limit}, params))
   end
 
-    # Helper method to invoke the public APIs
-    # Returns a tuple {status, result}
-    defp invoke_public_api(method) do
-      query_url = Application.get_env(:bitfinex_api, :api_endpoint) <> method
+  # Helper method to invoke the public APIs
+  # Returns a tuple {status, result}
+  defp invoke_public_api(method) do
+    query_url = Application.get_env(:bitfinex_api, :api_endpoint) <> method
 
-      case HTTPoison.get(query_url) do
-        {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, Poison.decode!(body)}
-        {:ok, %HTTPoison.Response{status_code: _, body: body}} -> {:error, Poison.decode!(body)}
-        err -> {:error, err}
-      end
+    case HTTPoison.get(query_url) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, Poison.decode!(body)}
+      {:ok, %HTTPoison.Response{status_code: _, body: body}} -> {:error, Poison.decode!(body)}
+      err -> {:error, err}
     end
+  end
 
   defp invoke_private_api(url, params, nonce \\ DateTime.utc_now() |> DateTime.to_unix(:millisecond) |> to_string) do
     api_key = Application.get_env(:bitfinex_api, :api_key)
