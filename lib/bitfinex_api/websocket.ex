@@ -35,9 +35,8 @@ defmodule BitfinexApi.WebSocket do
   def handle_frame(msg, state) do IO.inspect(msg); {:ok, state} end
 
   defp process_message(%{"chanId" => chanId, "channel" => "ticker", "event" => "subscribed", "pair" => pair} = msg, state) do
-    coin = String.slice(pair, 0, 3)
-    base = String.slice(pair, 3, 3)
-    state = Map.merge(state, Map.new([{chanId, [base: base, coin: coin]}]))
+    <<coin::binary-size(3), base::binary>> = pair
+    state = Map.merge(state, Map.new([{chanId, %{base: base, coin: coin}}]))
     {:ok, state}
   end
   defp process_message([_ | ["hb"]], state), do: {:ok, state}
